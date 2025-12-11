@@ -12,19 +12,22 @@ NOTE: I only tested this image on Linux-based systems. It might not be working o
     $ cat /path/to/config
     host = vpn.example.com
     port = 443
-    username = foo
-    password = bar
+    username = user@example.com
+    saml-login = 8020
     ```
 
 2. Run the following command to start the container.
 
     ```
     $ docker container run \
+        --net=host \
+        -p 8020:8020 \
+        -p 8443:8443 \
         --cap-add=NET_ADMIN \
         --device=/dev/ppp \
         --rm \
         -v /path/to/config:/etc/openfortivpn/config:ro \
-        ghcr.io/tosainu/fortivpn-socks5:master
+        ghcr.io/yownas/fortivpn-socks5:master
     ```
 
 3. Now you can use SSL-VPN via `http://<container-ip>:8443` or `socks5://<container-ip>:8443`.
