@@ -26,8 +26,9 @@ RUN \
 COPY entrypoint.sh /usr/bin/
 
 FROM alpine:3.20.1
-RUN apk add --no-cache ca-certificates openssl ppp
+RUN apk add --no-cache ca-certificates openssl ppp socat
 COPY --from=builder /usr/bin/openfortivpn /go/src/github.com/nadoo/glider/glider /usr/bin/entrypoint.sh /usr/bin/
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 EXPOSE 8443/tcp
+EXPOSE 8020/tcp
 CMD ["openfortivpn"]

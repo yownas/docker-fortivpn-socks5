@@ -16,26 +16,24 @@ NOTE: I only tested this image on Linux-based systems. It might not be working o
     saml-login = 8020
     ```
 
-2. Run the following command to start the container.
+2. Create network for the container (You only need this once.)
 
     ```
-    $ docker container run \
-        --net=host \
-        -p 8020:8020 \
-        -p 8443:8443 \
-        --cap-add=NET_ADMIN \
-        --device=/dev/ppp \
-        --rm \
-        -v /path/to/config:/etc/openfortivpn/config:ro \
-        ghcr.io/yownas/fortivpn-socks5:master
+    docker network create --subnet=172.20.0.0/16 fortinet
     ```
 
-3. Now you can use SSL-VPN via `http://<container-ip>:8443` or `socks5://<container-ip>:8443`.
+3. Run the following command to start the container.
 
     ```
-    $ http_proxy=http://172.17.0.2:8443 curl http://example.com
+    $ start.sh
+    ```
 
-    $ ssh -o ProxyCommand="nc -x 172.17.0.2:8443 %h %p" foo@example.com
+4. Now you can use SSL-VPN via `http://<container-ip>:8443` or `socks5://<container-ip>:8443`.
+
+    ```
+    $ http_proxy=http://172.17.0.10:8443 curl http://example.com
+
+    $ ssh -o ProxyCommand="nc -x 172.17.0.10:8443 %h %p" user@example.com
     ```
 
 ## License
