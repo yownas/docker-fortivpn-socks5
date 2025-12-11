@@ -1,6 +1,6 @@
 # docker-fortivpn-socks5
 
-Connect to a Fortinet SSL-VPN via http/socks5 proxy.
+Connect to a Fortinet SSL-VPN via http/socks5 proxy with SAML.
 
 ## Usage
 
@@ -22,10 +22,10 @@ NOTE: I only tested this image on Linux-based systems. It might not be working o
     docker network create --subnet=172.20.0.0/16 fortinet
     ```
 
-3. Run the following command to start the container.
+3. Run the following command to start the container (as root).
 
     ```
-    $ start.sh
+    $ sudo ./start.sh
     ```
 
 4. Now you can use SSL-VPN via `http://<container-ip>:8443` or `socks5://<container-ip>:8443`.
