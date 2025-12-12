@@ -6,10 +6,16 @@ Connect to a Fortinet SSL-VPN via http/socks5 proxy with SAML.
 
 NOTE: I only tested this image on Linux-based systems. It might not be working on macOS.
 
-1. Create an openfortivpn configuration file in ~/.ofv/config
+1. Make sure socat is installed
 
     ```
-    $ cat ~/.ofv/config
+    sudo apt install socat
+    ```
+    
+1. Create an openfortivpn configuration file in ~root/.ofv/config
+
+    ```
+    $ cat ~root/.ofv/config
     host = vpn.example.com
     port = 443
     username = user@example.com
@@ -34,6 +40,15 @@ NOTE: I only tested this image on Linux-based systems. It might not be working o
     $ http_proxy=http://172.20.0.10:8443 curl http://example.com
 
     $ ssh -o ProxyCommand="nc -x 172.20.0.10:8443 %h %p" user@example.com
+    ```
+    
+5. Add .ssh/config to use VPN automatically
+
+    ```
+    Host *.example.com
+      ProxyCommand nc -x 172.20.10:8443 %h %p
+      ForwardX11 "yes"
+      ForwardAgent "yes"
     ```
 
 ## License
