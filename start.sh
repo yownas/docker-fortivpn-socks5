@@ -3,6 +3,7 @@
 CONTAINER_IP=172.20.0.10
 
 # Setup 
+trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 socat TCP-LISTEN:8020,fork,bind=127.0.0.1 TCP:${CONTAINER_IP}:8021 &
 
 # Start openfortinetvpn
@@ -16,6 +17,3 @@ docker container run \
   --rm \
   -v ~/.ofv/config:/etc/openfortivpn/config:ro \
   yownas/docker-fortivpn-socks5:latest
-
-# Kill socat
-kill $(jobs -p)
