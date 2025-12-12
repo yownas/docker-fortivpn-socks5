@@ -3,7 +3,7 @@
 CONTAINER_IP=172.20.0.10
 
 # Setup 
-trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+trap "trap - TERM && kill -- -$$" INT TERM EXIT
 socat TCP-LISTEN:8020,fork,bind=127.0.0.1 TCP:${CONTAINER_IP}:8021 &
 
 # Start openfortinetvpn
